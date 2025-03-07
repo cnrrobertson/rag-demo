@@ -1,0 +1,25 @@
+[project]
+authors = ["Connor Robertson <cnr.robertson@gmail.com>"]
+channels = ["conda-forge"]
+name = "rag-demo"
+platforms = ["osx-arm64"]
+version = "0.1.0"
+
+[tasks]
+
+[dependencies]
+python = "3.11.*"
+langchain = ">=0.3.19,<0.4"
+faiss = ">=1.9.0,<2"
+marimo = ">=0.11.16,<0.12"
+ipython = ">=9.0.0,<10"
+jupyter_client = ">=8.6.3,<9"
+pynvim = ">=0.5.2,<0.6"
+ipykernel = ">=6.29.5,<7"
+langchain-community = ">=0.3.18,<0.4"
+langgraph = ">=0.3.2,<0.4"
+ollama-python = ">=0.4.7,<0.5"
+matplotlib = ">=3.10.1,<4"
+
+[pypi-dependencies]
+jq = ">=1.8.0, <2"
