@@ -1,0 +1,12 @@
+# data
+data/
+index/
+
+# tmp files
+__marimo__
+__pycache__
+.DS_Store
+
+# pixi environments
+.pixi
+*.egg-info
