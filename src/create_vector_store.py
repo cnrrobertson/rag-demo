@@ -1,4 +1,3 @@
-import matplotlib.pyplot as plt
 import numpy as np
 import json
 import ollama
@@ -6,8 +5,8 @@ import faiss
 import time
 
 # Settings
-metadata_path = "data/meta_Appliances.jsonl"
-data_path = "data/Appliances_20000.jsonl"
+metadata_path = "../data/meta_Appliances.jsonl"
+data_path = "../data/Appliances_20000.jsonl"
 model = "llama3.2:3b"
 
 # Load metadata
@@ -42,8 +41,8 @@ print(time2-time1)
 
 # %%
 # Save vector store / data
-faiss.write_index(index, "index/Appliances_20000.index")
+faiss.write_index(index, "../index/Appliances_20000.index")
 save_data = [d.replace("\n", "|:|") for d in data]
-with open("index/Appliances_20000.txt", "w") as file:
+with open("../index/Appliances_20000.txt", "w") as file:
     for sd in save_data:
         file.write(sd + "\n")

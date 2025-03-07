@@ -3,7 +3,6 @@ import marimo
 __generated_with = "0.11.16"
 app = marimo.App(width="medium")
 
-
 @app.cell
 def _():
     import marimo as mo
@@ -12,12 +11,11 @@ def _():
     import faiss
     return faiss, mo, np, ollama
 
-
 @app.cell
 def _(faiss, np):
     # Settings
-    index_name = "index/Appliances_20000.index"
-    data_name = "index/Appliances_20000.txt"
+    index_name = "../index/Appliances_20000.index"
+    data_name = "../index/Appliances_20000.txt"
     model = "llama3.2:3b"
 
     # Load vector store / data
@@ -29,7 +27,6 @@ def _(faiss, np):
     data = [d.replace('|:|', '\n') for d in data]
     data = np.array(data)
     return data, data_name, file, index, index_name, line, model
-
 
 @app.cell
 def _(data, index, model, np, ollama):
@@ -50,7 +47,6 @@ def _(data, index, model, np, ollama):
         return response.message.content
     return chat, find_reviews
 
-
 @app.cell
 def _(chat, find_reviews, mo):
     def my_model(messages, config):
@@ -69,15 +65,9 @@ def _(chat, find_reviews, mo):
         history = [{"role":m.role, "content":m.content} for m in messages[:-1]]
         response = chat(prompt, history)
         return response
- 
+
     mo.ui.chat(my_model)
     return (my_model,)
-
-
-@app.cell
-def _():
-    return
-
 
 if __name__ == "__main__":
     app.run()

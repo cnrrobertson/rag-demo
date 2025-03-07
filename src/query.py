@@ -3,8 +3,8 @@ import ollama
 import faiss
 
 # Settings
-index_name = "index/Appliances_20000.index"
-data_name = "index/Appliances_20000.txt"
+index_name = "../index/Appliances_20000.index"
+data_name = "../index/Appliances_20000.txt"
 model = "llama3.2:3b"
 
 # Load vector store / data
