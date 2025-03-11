@@ -30,12 +30,30 @@ def _(faiss, np):
 
 @app.cell
 def _(data, index, model, np, ollama):
-    def find_reviews(question, n_documents=10):
+    def find_reviews(question, messages, n_documents=10):
+        # Get item context
+        history = [{"role":m.role, "content":m.content} for m in messages[:-1]]
+        item_prompt = f"Given this chat history and the question: {question}, are we discussing a specific item? Answer with the name of the product or with a blank space.\nITEM NAME: "
+        relevant_item = chat(item_prompt, history)
+
+        # Look for relevant documents
+        new_question = f"Question: {question}\nItem: {relevant_item}"
         embedding = np.array(
-            ollama.embed(model, question).embeddings
+            ollama.embed(model, new_question).embeddings
         )
         scores, reviews = index.search(embedding, n_documents)
-        return data[reviews].flatten()
+
+        # Filter scores by relevant product
+        item_embedding = np.array(
+            ollama.embed(model, relevant_item).embeddings
+        )
+        item_scores, item_reviews = index.search(item_embedding, n_documents)
+
+        good_reviews = np.intersect1d(reviews, item_reviews)
+        if len(good_reviews) > 0:
+            return data[good_reviews].flatten()
+        else:
+            return data[reviews].flatten()
 
     def chat(prompt, history):
         response = ollama.chat(
@@ -52,7 +70,7 @@ def _(chat, find_reviews, mo):
     def my_model(messages, config):
         # Retrieve related reviews
         question = messages[-1].content
-        reviews = find_reviews(question)
+        reviews = find_reviews(question, messages)
 
         # Build prompt
         context = "\n".join(reviews.tolist())
