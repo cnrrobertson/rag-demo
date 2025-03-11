@@ -56,7 +56,7 @@ def _(chat, find_reviews, mo):
 
         # Build prompt
         context = "\n".join(reviews.tolist())
-        prompt = "You are an assistant helping users sift through a corpus of user reviews to glean insights. Specific reviews are provided to assist in the Context below to assist you in answering questions. Keep answers concise but always try to include the name of a product with a summary of its rating and what reviews like or dislike about it." + "\n"
+        prompt = "You are an expert on home appliances. Answer questions as an expert would, without referencing 'documents,' or 'provided context.' Never use phrases like 'based on the information provided' or 'based on the text snippet.' Simply provide direct, helpful information about the appliances as if you inherently know these details. Always include the name of a product with a summary of its rating and reviews from consumers if possible." + "\n"
         prompt += f"Context: {context}" + "\n\n"
         prompt += f"Question: {question}" + "\n\n"
         prompt += "Answer:" + "\n\n"
